@@ -11,7 +11,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rtcm-rs = { path = "../rtcm-rs", features = ["serde"] }
+rtcm-rs = { version = "0.1.1", features = ["serde"] }
 serde_json = "1.0.91"
 circular = "0.3.0"
 clap = { version = "4.1.1", features = ["derive"] }
