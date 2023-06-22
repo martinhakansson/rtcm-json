@@ -1,0 +1,19 @@
+[package]
+name = "rtcm-json"
+version = "0.1.0"
+authors = ["Martin Håkansson <martinhakansson@yahoo.com>"]
+description = "Serializing/deserializing RTCM v. 3 as json"
+keywords = ["rtcm","serde","json"]
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rtcm-rs = { path = "../rtcm-rs", features = ["serde"] }
+serde_json = "1.0.91"
+circular = "0.3.0"
+clap = { version = "4.1.1", features = ["derive"] }
+base64 = "0.21.0"
+chrono = "0.4.23"
