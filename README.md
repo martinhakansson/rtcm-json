@@ -58,6 +58,12 @@ cargo build --release
 
 This will compile the application and create an executable in the `target/release/` directory.
 
+Or you can build and install it with cargo:
+
+```
+cargo install rtcm-json
+```
+
 ## License
 
-This project is licensed under the MIT License and Apache-2.0 - see the LICENSE-MIT and LICENSE-APACHE files for details.
+MIT or Apache-2.0
