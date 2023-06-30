@@ -270,7 +270,7 @@ pub fn parse_arguments() -> Result<Arguments, ()> {
             }
             matches if matches.contains_id(NTRIP_CLIENT_INPUT_ID) => {
                 let (host, port) =
-                    parse_host_port(&matches.get_one::<String>(TCP_CLIENT_INPUT_ID).unwrap())
+                    parse_host_port(&matches.get_one::<String>(NTRIP_CLIENT_INPUT_ID).unwrap())
                         .expect("host and port incorrectly specified");
                 let mountpoint = matches.get_one::<String>(MOUNTPOINT_ID).unwrap().clone();
                 let username = matches.get_one::<String>(USERNAME_ID).cloned();
@@ -322,7 +322,7 @@ pub fn parse_arguments() -> Result<Arguments, ()> {
 }
 
 fn parse_host_port(addr: &str) -> Result<(String, u16), ()> {
-    let mut v_iter = addr.split(',');
+    let mut v_iter = addr.split(':');
     let host = if let Some(v) = v_iter.next() {
         v
     } else {

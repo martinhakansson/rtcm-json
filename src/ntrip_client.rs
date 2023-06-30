@@ -46,7 +46,7 @@ impl Read for NtripClient {
                 //initialize connection
                 stream.write_all(
                     format!(
-                        "GET /{} HTTP/1.0\r\nUser-Agent: NTRIP rtcm-json/0.1\r\n{}\r\n",
+                        "GET /{} HTTP/1.0\r\nUser-Agent: NTRIP rtcm-json/0.1\r\nAccept: */*\r\n{}\r\n",
                         &self.mountpoint,
                         if let Some(cr) = self.credentials.as_ref() {
                             format!("Authorization: Basic {}\r\n", encode_credentials(cr))
@@ -55,7 +55,7 @@ impl Read for NtripClient {
                         }
                     )
                     .as_bytes(),
-                )?;
+                )?;                
                 //verify response
                 let mut resp_buf: [u8; 12] = [0; 12];
                 let mut written: usize = 0;
@@ -64,7 +64,7 @@ impl Read for NtripClient {
                     written += n;
                     if &"ICY 200 OK\r\n".as_bytes()[..written] != &resp_buf[..written] {
                         return Err(std::io::ErrorKind::PermissionDenied.into());
-                    }
+                    }                    
                 }
                 if "ICY 200 OK\r\n".as_bytes() != &resp_buf {
                     return Err(std::io::ErrorKind::PermissionDenied.into());
@@ -73,7 +73,7 @@ impl Read for NtripClient {
                 if let Some(coord) = self.nmea_coord.as_ref() {
                     coord.write_to_stream(stream)?;
                     self.latest_nmea_write = Some(Instant::now());
-                }
+                }                
                 stream
             }
         };

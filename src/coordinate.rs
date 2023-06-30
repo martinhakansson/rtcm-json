@@ -52,8 +52,8 @@ impl Coordinate {
         let lon = self.longitude.abs();
         let lat_dir = if self.latitude >= 0.0 { 'N' } else { 'S' };
         let lon_dir = if self.longitude >= 0.0 { 'E' } else { 'W' };
+        let gga = format!("GPGGA,{:02}{:02}{:02}.{:02},{:02}{:02}.{:06},{},{:03}{:02}.{:06},{},0,0,1.0,{:.3},M,0.0,M,,",
 
-        let gga = format!("GPGGA,{:02}{:02}{:02}.{:02},{:02}{:02.2},{},{:02}{:03.2},{},0,00,0.0,{:.1},M,0.0,M,0.0,0000",
             utc.hour(),
             utc.minute(),
             utc.second(),
@@ -61,10 +61,12 @@ impl Coordinate {
                 utc.timestamp_subsec_millis() / 10
             } else { utc.timestamp_subsec_millis() / 10 - 100 },
             lat.trunc(),
-            lat.fract() * 60.0,
+            (lat.fract() * 60.0).trunc(),
+            ((lat * 60.0).fract() * 1000000.0).trunc(),
             lat_dir,
             lon.trunc(),
-            lon.fract() * 60.0,
+            (lon.fract() * 60.0).trunc(),
+            ((lon * 60.0).fract() * 1000000.0).trunc(),
             lon_dir,
             self.height,
         );
