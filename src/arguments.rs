@@ -5,6 +5,7 @@ pub struct Arguments {
     pub input: Input,
     pub output: Output,
     pub conv_dir: ConvDir,
+    pub pretty_print:bool,
 }
 
 pub enum Input {
@@ -64,6 +65,7 @@ const STDOUT_OUTPUT_ID: &'static str = "stdout-ouput";
 const FILE_OUTPUT_ID: &'static str = "file-output";
 const TCP_CLIENT_OUTPUT_ID: &'static str = "tcp-client-output";
 const TCP_SERVER_OUTPUT_ID: &'static str = "tcp-server-output";
+const PRETTY_PRINT_ID: &'static str = "pretty-print";
 const INPUT_GROUP_ID: &'static str = "input-group";
 const OUTPUT_GROUP_ID: &'static str = "output-group";
 const COORDINATE_GROUP_ID: &'static str = "coordinate-group";
@@ -74,7 +76,7 @@ pub fn parse_arguments() -> Result<Arguments, ()> {
             Arg::new(REVERSE_ID)
                 .short('b')
                 .long("backward")
-                .help("backward conversion, i.e. from json to binary rtcm")
+                .help("backward conversion, i.e. from json (ndjson) to binary rtcm")
                 .action(clap::ArgAction::SetTrue),
         )
         .arg(
@@ -89,6 +91,7 @@ pub fn parse_arguments() -> Result<Arguments, ()> {
                 .short('f')
                 .long("file-input")
                 .value_name("file path")
+                .help("input from file")
                 .action(clap::ArgAction::Set),
         )
         .arg(
@@ -104,7 +107,7 @@ pub fn parse_arguments() -> Result<Arguments, ()> {
                 .short('n')
                 .long("ntrip-client-input")
                 .value_name("<host>:<port>")
-                .help("input from built-in ntrip (v. 1) client. \n(Requires mountpoint argument)")
+                .help("input from built-in Ntrip (v. 1) client. \n(Requires mountpoint argument)")
                 .action(clap::ArgAction::Set)
                 .requires(MOUNTPOINT_ID),
         )
@@ -112,24 +115,26 @@ pub fn parse_arguments() -> Result<Arguments, ()> {
             Arg::new(MOUNTPOINT_ID)
                 .short('m')
                 .long("mountpoint")
-                .value_name("ntrip mountpoint")
-                .help("ntrip caster mountpoint to connect to")
+                .value_name("Ntrip mountpoint")
+                .help("Ntrip caster mountpoint to connect to")
                 .action(clap::ArgAction::Set),
         )
         .arg(
             Arg::new(USERNAME_ID)
                 .short('u')
                 .long("username")
-                .value_name("ntrip username")
-                .help("username if required for connection to ntrip caster")
+                .value_name("Ntrip username")
+                .help("username if required for connection to Ntrip caster")
+                .action(clap::ArgAction::Set)
                 .requires(PASSWORD_ID),
         )
         .arg(
             Arg::new(PASSWORD_ID)
                 .short('p')
                 .long("password")
-                .value_name("ntrip password")
-                .help("password if required for connection to ntrip caster")
+                .value_name("Ntrip password")
+                .help("password if required for connection to Ntrip caster")
+                .action(clap::ArgAction::Set)
                 .requires(USERNAME_ID),
         )
         .arg(
@@ -137,7 +142,7 @@ pub fn parse_arguments() -> Result<Arguments, ()> {
                 .short('l')
                 .long("llh")
                 .value_name("<latitude>,<longitude>,<height>>")
-                .help("coordinate to supply to ntrip caster in \nnmea gga message if required")
+                .help("coordinate to supply to Ntrip caster in \nnmea gga message if required")
                 .next_line_help(true)
                 .action(clap::ArgAction::Set)
                 .value_parser(|v: &str| -> Result<Coordinate, CoordinateParseError> {
@@ -169,7 +174,7 @@ pub fn parse_arguments() -> Result<Arguments, ()> {
                 .short('x')
                 .long("xyz")
                 .value_name("<x>,<y>,<z>>")
-                .help("coordinate to supply to ntrip caster in \nnmea gga message if required")
+                .help("coordinate to supply to Ntrip caster in \nnmea gga message if required")
                 .next_line_help(true)
                 .action(clap::ArgAction::Set)
                 .value_parser(|v: &str| -> Result<Coordinate, CoordinateParseError> {
@@ -200,8 +205,8 @@ pub fn parse_arguments() -> Result<Arguments, ()> {
             Arg::new(NMEA_REPEAT_INTERVAL_ID)
                 .short('r')
                 .long("nmea-repeat")
-                .value_name("nmea repeat interval (s)")
-                .help("time interval between resend of nmea gga coordinates")
+                .value_name("NMEA repeat interval (s)")
+                .help("time interval between resend of NMEA GGA coordinates")
                 .action(clap::ArgAction::Set)
                 .value_parser(clap::value_parser!(u64)),
         )
@@ -224,7 +229,7 @@ pub fn parse_arguments() -> Result<Arguments, ()> {
             Arg::new(TCP_CLIENT_OUTPUT_ID)
                 .short('C')
                 .long("tcp-client-output")
-                .value_name("<host url>:<port>")
+                .value_name("<host>:<port>")
                 .help("output to tcp client connection")
                 .action(clap::ArgAction::Set),
         )
@@ -233,7 +238,16 @@ pub fn parse_arguments() -> Result<Arguments, ()> {
                 .short('S')
                 .long("tcp-server-output")
                 .value_name("<host>:<port>")
-                .help("serve output on <host>:<port>"),
+                .help("serve output on <host>:<port>")
+                .action(clap::ArgAction::Set),
+        )
+        .arg(
+            Arg::new(PRETTY_PRINT_ID)
+                .short('P')
+                .long("pretty-print")
+                .value_name("pretty print")
+                .help("pretty print json output (this format is not valid for backward conversion)")
+                .action(clap::ArgAction::SetTrue),
         )
         .group(
             ArgGroup::new(INPUT_GROUP_ID)
@@ -313,11 +327,12 @@ pub fn parse_arguments() -> Result<Arguments, ()> {
             }
             _ => Output::StdOut,
         },
-        conv_dir: if *matches.get_one::<bool>("reverse").unwrap() {
+        conv_dir: if *matches.get_one::<bool>(REVERSE_ID).unwrap() {
             ConvDir::Backward
         } else {
             ConvDir::Forward
         },
+        pretty_print: *matches.get_one::<bool>(PRETTY_PRINT_ID).unwrap(),
     })
 }
 

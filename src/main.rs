@@ -19,13 +19,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         input,
         output,
         conv_dir,
+        pretty_print,
     } = arguments;
 
     let input: Box<dyn BufRead> = setup_input(input)?;
     let output: Box<dyn Write> = setup_output(output)?;
 
     if let arguments::ConvDir::Forward = conv_dir {
-        forward(input, output);
+        forward(input, output, pretty_print);
     } else {
         backward(input, output);
     }
@@ -75,7 +76,7 @@ fn setup_output(output: arguments::Output) -> Result<Box<dyn Write>, Box<dyn std
     }
 }
 
-fn forward(mut rtcm_input: Box<dyn BufRead>, mut json_output: Box<dyn Write>) {
+fn forward(mut rtcm_input: Box<dyn BufRead>, mut json_output: Box<dyn Write>, pretty_print:bool) {
     let mut buffer = Buffer::with_capacity(2 * 1029);
     loop {
         if let Ok(n) = rtcm_input.read(buffer.space()) {
@@ -86,7 +87,11 @@ fn forward(mut rtcm_input: Box<dyn BufRead>, mut json_output: Box<dyn Write>) {
         }
         let mut iter = MsgFrameIter::new(buffer.data());
         for mf in &mut iter {
-            if let Ok(json_msg) = serde_json::to_string(&mf.get_message()) {
+            if let Ok(json_msg) = if pretty_print {
+                serde_json::to_string_pretty(&mf.get_message())
+            } else {
+                serde_json::to_string(&mf.get_message())
+            } {
                 let _ = json_output.write_all(json_msg.as_bytes());
                 let _ = json_output.write_all("\r\n".as_bytes());
             }

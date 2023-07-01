@@ -14,38 +14,43 @@ $ rtcm-json --help
 Usage: rtcm-json [OPTIONS]
 
 Options:
-  -b, --backward                      backward conversion, i.e. from json to binary rtcm
-  -i, --stdin-input                   input from standard input [default]
+  -b, --backward
+          backward conversion, i.e. from json (ndjson) to binary rtcm
+  -i, --stdin-input
+          input from standard input [default]
   -f, --file-input <file path>
+          input from file
   -c, --tcp-client-input <<host>:<port>>
-                                      input from tcp client connection
+          input from tcp client connection
   -n, --ntrip-client-input <<host>:<port>>
-                                      input from built-in ntrip (v. 1) client. 
-                                      (Requires mountpoint argument)
-  -m, --mountpoint <ntrip mountpoint>
-                                      ntrip caster mountpoint to connect to
-  -u, --username <ntrip username>
-                                      username if required for connection to ntrip caster
-  -p, --password <ntrip password>
-                                      password if required for connection to ntrip caster
-  -l, --llh <<latitude>,<longitude>,<height>>
-                                      coordinate to supply to ntrip caster in 
-                                      nmea gga message if required
-  -x, --xyz <<x>,<y>,<z>>
-                                      coordinate to supply to ntrip caster in 
-                                      nmea gga message if required
-  -r, --nmea-repeat <nmea repeat interval (s)>
-                                      time interval between resend of nmea gga coordinates
+          input from built-in Ntrip (v. 1) client. 
+          (Requires mountpoint argument)
+  -m, --mountpoint <Ntrip mountpoint>
+          Ntrip caster mountpoint to connect to
+  -u, --username <Ntrip username>
+          username if required for connection to Ntrip caster
+  -p, --password <Ntrip password>
+          password if required for connection to Ntrip caster
+  -l, --llh <<latitude>,<longitude>,<height>>>
+          coordinate to supply to Ntrip caster in 
+          nmea gga message if required
+  -x, --xyz <<x>,<y>,<z>>>
+          coordinate to supply to Ntrip caster in 
+          nmea gga message if required
+  -r, --nmea-repeat <NMEA repeat interval (s)>
+          time interval between resend of NMEA GGA coordinates
   -O, --stdout-output
-                                      output to standard output [default]
+          output to standard output [default]
   -F, --file-output <file path>
-                                      output to file
-  -C, --tcp-client-output <<host url>:<port>>
-                                      output to tcp client connection
+          output to file
+  -C, --tcp-client-output <<host>:<port>>
+          output to tcp client connection
   -S, --tcp-server-output <<host>:<port>>
-                                      serve output on <host>:<port>
+          serve output on <host>:<port>
+  -P, --pretty-print
+          pretty print json output (this format is not valid for backward conversion)
   -h, --help
-                                      Print help
+          Print help
 ```
 
 ## Building the Executable
