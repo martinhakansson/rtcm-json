@@ -1,6 +1,6 @@
 [package]
 name = "rtcm-json"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Martin Håkansson <martinhakansson@yahoo.com>"]
 categories = ["encoding","command-line-interface", "command-line-utilities","parser-implementations"]
 description = "Serializing/deserializing RTCM v. 3 as json"
