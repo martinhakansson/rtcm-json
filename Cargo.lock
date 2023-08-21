@@ -373,7 +373,7 @@ dependencies = [
 
 [[package]]
 name = "rtcm-json"
-version = "0.3.0"
+version = "0.4.0"
 dependencies = [
  "base64",
  "chrono",
@@ -385,9 +385,9 @@ dependencies = [
 
 [[package]]
 name = "rtcm-rs"
-version = "0.4.0"
+version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d74ff026842433d449d4007ffeda17303582fbce1d41cda65515f4f5131c8c0c"
+checksum = "5316b1d67ecd74313a375ab6959869541882b05c6cf297b553b52da6c90a7aba"
 dependencies = [
  "crc-any",
  "serde",
