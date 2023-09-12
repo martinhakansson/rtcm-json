@@ -373,7 +373,7 @@ dependencies = [
 
 [[package]]
 name = "rtcm-json"
-version = "0.4.0"
+version = "0.5.0"
 dependencies = [
  "base64",
  "chrono",
