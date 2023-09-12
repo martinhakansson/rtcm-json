@@ -72,6 +72,8 @@ const COORDINATE_GROUP_ID: &'static str = "coordinate-group";
 
 pub fn parse_arguments() -> Result<Arguments, ()> {
     let matches = Command::new("rtcm-json")
+        .version(version!())
+        .about("JSON serialization/deserialization of RTCM v. 3")
         .arg(
             Arg::new(REVERSE_ID)
                 .short('b')

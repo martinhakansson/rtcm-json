@@ -46,8 +46,9 @@ impl Read for NtripClient {
                 //initialize connection
                 stream.write_all(
                     format!(
-                        "GET /{} HTTP/1.0\r\nUser-Agent: NTRIP rtcm-json/0.1\r\nAccept: */*\r\n{}\r\n",
+                        "GET /{} HTTP/1.0\r\nUser-Agent: NTRIP rtcm-json/{}\r\nAccept: */*\r\n{}\r\n",                        
                         &self.mountpoint,
+                        version!(),
                         if let Some(cr) = self.credentials.as_ref() {
                             format!("Authorization: Basic {}\r\n", encode_credentials(cr))
                         } else {

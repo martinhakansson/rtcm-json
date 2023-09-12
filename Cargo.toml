@@ -3,7 +3,7 @@ name = "rtcm-json"
 version = "0.4.0"
 authors = ["Martin Håkansson <martinhakansson@yahoo.com>"]
 categories = ["encoding","command-line-interface", "command-line-utilities","parser-implementations"]
-description = "Serializing/deserializing RTCM v. 3 as json"
+description = "JSON serialization/deserialization of RTCM v. 3"
 keywords = ["rtcm","serde","json"]
 license = "MIT OR Apache-2.0"
 readme = "README.md"
@@ -19,3 +19,4 @@ circular = "0.3.0"
 clap = { version = "4.1.1", features = ["derive"] }
 base64 = "0.21.0"
 chrono = "0.4.23"
+version = "3.0.0"

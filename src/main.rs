@@ -1,9 +1,10 @@
 use circular::Buffer;
-
 use rtcm_rs::{self, prelude::*};
 use serde_json;
 use tcp_server::TcpServer;
 use std::io::{BufRead, BufReader, Read, Write};
+#[macro_use]
+extern crate version;
 
 mod arguments;
 mod coordinate;
