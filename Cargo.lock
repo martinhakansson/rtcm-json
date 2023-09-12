@@ -386,9 +386,9 @@ dependencies = [
 
 [[package]]
 name = "rtcm-rs"
-version = "0.5.0"
+version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5316b1d67ecd74313a375ab6959869541882b05c6cf297b553b52da6c90a7aba"
+checksum = "1306bb37434b72a30e1c98d9089cc0ea8418cc6be7256447ceaaae070a267d55"
 dependencies = [
  "crc-any",
  "serde",
