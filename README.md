@@ -4,6 +4,10 @@ This is a command-line interface (CLI) application that facilitates the serializ
 
 The application supports several input and output options, including an NTRIP v. 1 client implementation.
 
+## Pre-Compiled Binaries
+
+[Pre-compiled binaries](https://github.com/martinhakansson/rtcm-json/releases) are provided for various platform to allow for quick and easy setup without the need for building the application from source.
+
 ## Usage
 
 The application is invoked through the command `rtcm-json` and accepts several options to customize the conversion process.
@@ -51,6 +55,8 @@ Options:
           pretty print json output (this format is not valid for backward conversion)
   -h, --help
           Print help
+  -V, --version
+          Print version
 ```
 
 ## Building the Executable
