@@ -110,5 +110,6 @@ jobs:
     - name: Create Release
       uses: ncipollo/release-action@v1
       with:
+        name: ${{ github.ref_name }}
         draft: true
         artifacts: "*"
