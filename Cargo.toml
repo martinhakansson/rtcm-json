@@ -1,6 +1,6 @@
 [package]
 name = "rtcm-json"
-version = "0.9.0"
+version = "0.10.0"
 authors = ["Martin Håkansson <martinhakansson@yahoo.com>"]
 categories = ["encoding","command-line-interface", "command-line-utilities","parser-implementations"]
 description = "JSON serialization/deserialization of RTCM v. 3"
@@ -13,7 +13,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rtcm-rs = { version = "0.10.0", features = ["serde"] }
+rtcm-rs = { version = "0.11.0", features = ["serde"] }
 serde_json = "1.0.114"
 circular = "0.3.0"
 clap = { version = "4.5.3", features = ["derive"] }
