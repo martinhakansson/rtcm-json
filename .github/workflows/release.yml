@@ -95,12 +95,13 @@ jobs:
         echo "ASSET_SUM=$ARCHIVE.zip.sha256" >> $GITHUB_ENV
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3     
+      uses: actions/upload-artifact@v4     
       with:
         name: ${{ env.ASSET }}
         path: |
           ${{ env.ASSET }}
           ${{ env.ASSET_SUM }}
+        compression-level: 0
   
   release:
     runs-on: ubuntu-latest
