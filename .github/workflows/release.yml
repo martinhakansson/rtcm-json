@@ -113,4 +113,4 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         draft: true
-        artifacts: "*"
+        artifacts: "rtcm-json-${{ github.ref_name }}-x86_64-unknown-linux-gnu.tar.gz/*, rtcm-json-${{ github.ref_name }}-x86_64-pc-windows-msvc.zip/*, rtcm-json-${{ github.ref_name }}-x86_64-pc-windows-gnu.zip/*, rtcm-json-${{ github.ref_name }}-x86_64-apple-darwin.tar.gz/*, rtcm-json-${{ github.ref_name }}-aarch64-apple-darwin.tar.gz/*"
